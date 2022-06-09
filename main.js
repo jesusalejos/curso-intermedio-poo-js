@@ -221,58 +221,224 @@ const escuelaData = new LearningPath({ name: "Escuela de Data Science" });
 
 //more about class 9
 
-const obj1 = {
-    a: 'a',
-    b: 'b',
-    c: {
-        d: 'd',
-        e: 'e',
+// const obj1 = {
+//     a: 'a',
+//     b: 'b',
+//     c: {
+//         d: 'd',
+//         e: 'e',
+//     },
+// };
+
+// function isObject(subject) {
+//   return typeof subject == "object";
+// }
+
+// function isArray(subject) {
+//   return Array.isArray(subject);
+// }
+
+// function deepCopy(subject) {
+//   let copySubject;
+
+//   const subjectIsObject = isObject(subject);
+//   const subjectIsArray = isArray(subject);
+
+//   if (subjectIsArray) {
+//     copySubject = [];
+//   } else if (subjectIsObject) {
+//     copySubject = {};
+//   } else {
+//     return subject;
+//   }
+
+//   for (key in subject) {
+//     const keyIsObject = isObject(subject[key]);
+//     const IndexArray = isArray(subject[key]);
+
+//     if (keyIsObject) {
+//       copySubject[key] = deepCopy(subject[key]);
+//     } 
+
+//     else if (IndexArray){
+//         copySubject.push(subject[key]);
+//       } 
+
+//     else {
+//         copySubject[key] = subject[key];
+//       }
+    
+//   }
+
+//   return copySubject;
+// }
+
+// let obj2 = deepCopy(obj1)
+
+// console.log(obj2)
+
+//Class 10
+
+// const studentBase = {
+//   name: undefined,
+//   email: undefined,
+//   age: undefined,
+//   approvedCourse: undefined,
+//   learningPaths: undefined,
+//   socialMedia: {
+//       twitter: undefined,
+//       instagram: undefined,
+//       facebook: undefined,
+//   }
+// };
+
+// const carlos = deepCopy(studentBase);
+// // Object.defineProperty(carlos, "name", {
+// //     value: "Carlitos",
+// //     configurable: false,
+// // });
+// Object.seal(carlos); // Es lo mismo que lo de arriba pero mas easy
+// carlos.name = "Carlitos";
+
+// Object.isSealed(carlos); // Nos muestra con True o False si todas las propiedades estan selladas
+// Object.isFrozen(carlos); // Nos muestra con True o False si todas las propiedades estan congeladas
+
+// console.log(carlos);
+
+//Class 11
+
+/* Codigo Deep Copy */
+
+// Requerimientos de parametros obligatorios
+function requiredParam(param){
+  throw new Error(param + " Campo obligatorio");
+}
+
+// Fabrica de estudiantes
+// function createStudent({
+//   name = requiredParam("name"),
+//   email = requiredParam("email"),
+//   age,
+//   twitter,
+//   instagram,
+//   facebook,
+//   approvedCourses = [],
+//   learningPaths = [],
+// } = {}) {
+//   return {
+//       name,
+//       age,
+//       email,
+//       approvedCourses,
+//       learningPaths,
+//       socialMedia: {
+//           twitter,
+//           instagram,
+//           facebook,
+//       },
+//   };
+// }
+
+// const carlos = createStudent({
+//   name: 'Carlito',
+//   age: 20,
+//   email: 'carlito@mazzarolito.com',
+//   twitter: 'carlitosmzz',
+// }); // {}
+
+// class 12
+
+// function requiredParam(param){throw new Error(param+" es obligatorio");}
+
+// function createStudent({
+//   name=requiredParam("name"),
+//   email=requiredParam("email"),
+//   age,
+//   twitter,
+//   instagram,
+//   facebook,
+//   approvedCourses=[],
+//   learningPaths=[],
+// }={})
+// {
+//   const private={
+//     "_name":name,
+//   };
+//   const public={
+//     email,
+//     age,
+//     approvedCourses,
+//     learningPaths,
+//     socialMedia:{
+//       twitter,
+//       instagram,
+//       facebook,
+//     },
+//     readName()
+//     {return private["_name"];
+//   },
+//   changeName(newName){
+//     private["_name"]=newName;
+//   },};
+
+//   Object.defineProperty(public,"readName",{
+//     writable:false,
+//     configurable:false,});
+//   Object.defineProperty(public,"changeName",{
+//     writable:false,
+//     configurable:false,});
+
+    // In the previous not work object.freeze() for the function scope. 
+
+//     return public;}
+
+// const juan=createStudent({email:"juanito@frijoles.co",name:"Juanito"});
+
+// class 13
+
+function requiredParam(param){throw new Error(param+" es obligatorio");}
+
+function createStudent({
+  name=requiredParam("name"),
+  email=requiredParam("email"),
+  age,
+  twitter,
+  instagram,
+  facebook,
+  approvedCourses=[],
+  learningPaths=[],
+}={})
+{
+  const private={
+    "_name":name,
+  };
+
+  const public={
+    email,
+    age,
+    approvedCourses,
+    learningPaths,
+    socialMedia:{
+      twitter,
+      instagram,
+      facebook,
     },
+
+    get name (){
+      return private["_name"]
+    },
+
+    set name (newName){
+      if (newName.length != 0) {
+        return private["_name"]
+      }
+      else {
+        console.warn("Tu nombre debe tener al menos un caracter")
+      }
+      
+    }
+  }
+    return public
 };
 
-function isObject(subject) {
-  return typeof subject == "object";
-}
-
-function isArray(subject) {
-  return Array.isArray(subject);
-}
-
-function deepCopy(subject) {
-  let copySubject;
-
-  const subjectIsObject = isObject(subject);
-  const subjectIsArray = isArray(subject);
-
-  if (subjectIsArray) {
-    copySubject = [];
-  } else if (subjectIsObject) {
-    copySubject = {};
-  } else {
-    return subject;
-  }
-
-  for (key in subject) {
-    const keyIsObject = isObject(subject[key]);
-    const IndexArray = isArray(subject[key]);
-
-    if (keyIsObject) {
-      copySubject[key] = deepCopy(subject[key]);
-    } 
-
-    else if (IndexArray){
-        copySubject.push(subject[key]);
-      } 
-
-    else {
-        copySubject[key] = subject[key];
-      }
-    
-  }
-
-  return copySubject;
-}
-
-let obj2 = deepCopy(obj1)
-
-console.log(obj2)
+const juan=createStudent({email:"juanito@frijoles.co",name:"Juanito"});
